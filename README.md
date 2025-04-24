@@ -1,61 +1,61 @@
-# Jetson AGX Orin 上的 YOLOv8 TensorRT 人員與車輛偵測範例
+# YOLOv8 TensorRT Human and Vehicle Detection on Jetson AGX Orin
 
-本指南說明如何在 NVIDIA Jetson AGX Orin 上使用 YOLOv8 和 TensorRT 執行人員與車輛偵測。
+This guide outlines the steps to run human and vehicle detection using YOLOv8 and TensorRT on the NVIDIA Jetson AGX Orin.
 
-## 環境準備
+## Prerequisites
 
-1.  **更新和升級系統套件：**
+1.  **Update and Upgrade System Packages:**
     ```bash
     sudo apt-get update
     sudo apt-get upgrade
     ```
 
-2.  **安裝必要的工具：**
+2.  **Install Necessary Tools:**
     ```bash
     sudo apt-get install cmake wget curl
     ```
 
-## 程式碼取得與建置
+## Code Acquisition and Building
 
-1.  **建立工作目錄 (請將 `MyDir` 替換為您想要的目錄名稱)：**
+1.  **Create a Working Directory (replace `MyDir` with your desired directory name):**
     ```bash
     mkdir MyDir
     cd MyDir
     ```
 
-2.  **克隆 YOLOv8-TensorRT-Jetson_Nano 儲存庫：**
+2.  **Clone the YoloV8-TensorRT-Jetson_Nano Repository:**
     ```bash
     git clone --depth=1 [https://github.com/Qengineering/YoloV8-TensorRT-Jetson_Nano.git](https://github.com/Qengineering/YoloV8-TensorRT-Jetson_Nano.git)
     ```
 
-3.  **尋找 `trtexec` 應用程式：**
-    `trtexec` 工具通常位於 Jetson 上的 `/usr/src/tensorrt/bin/` 資料夾中。此工具用於將 ONNX 模型轉換為 TensorRT 引擎格式。
+3.  **Locate the `trtexec` Application:**
+    The `trtexec` tool is typically found in the `/usr/src/tensorrt/bin/` folder on your Jetson. This tool is used to convert the ONNX model to the TensorRT engine format.
 
-4.  **轉換 ONNX 模型至 TensorRT 引擎 (假設您有名為 `yolov8s.onnx` 的 ONNX 模型)：**
+4.  **Convert ONNX Model to TensorRT Engine (assuming you have an ONNX model named `yolov8s.onnx`):**
     ```bash
     trtexec --onnx=yolov8s.onnx --saveEngine=yolov8s.engine --fp16
     ```
-    **注意：** 您可能需要將 `yolov8s.onnx` 替換為您實際使用的 ONNX 模型路徑。
+    **Note:** You might need to replace `yolov8s.onnx` with the actual path to your ONNX model.
 
-5.  **建立建置目錄：**
+5.  **Create a Build Directory:**
     ```bash
     mkdir build
     cd build
     ```
 
-6.  **使用 CMake 配置建置：**
+6.  **Configure the Build with CMake:**
     ```bash
     cmake ..
     ```
 
-7.  **編譯專案：**
+7.  **Compile the Project:**
     ```bash
     make -j4
     ```
 
-## 執行範例
+## Running the Demo
 
-編譯完成後，您可以使用以下命令來執行人員與車輛偵測的範例：
+After compilation, you can use the following command to run the human and vehicle detection demo:
 
 ```bash
-./YoloV8rt model/yolov8s.engine [圖片或影片路徑]
+./YoloV8rt model/yolov8s.engine [image or video path]
